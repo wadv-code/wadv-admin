@@ -4,36 +4,9 @@
   "configurations": [
     {
       "type": "chrome",
-      "name": "vben admin playground dev",
+      "name": "vben admin dev",
       "request": "launch",
-      "url": "http://localhost:5555",
-      "env": { "NODE_ENV": "development" },
-      "sourceMaps": true,
-      "webRoot": "${workspaceFolder}"
-    },
-    {
-      "type": "chrome",
-      "name": "vben admin antd dev",
-      "request": "launch",
-      "url": "http://localhost:5666",
-      "env": { "NODE_ENV": "development" },
-      "sourceMaps": true,
-      "webRoot": "${workspaceFolder}"
-    },
-    {
-      "type": "chrome",
-      "name": "vben admin ele dev",
-      "request": "launch",
-      "url": "http://localhost:5777",
-      "env": { "NODE_ENV": "development" },
-      "sourceMaps": true,
-      "webRoot": "${workspaceFolder}"
-    },
-    {
-      "type": "chrome",
-      "name": "vben admin naive dev",
-      "request": "launch",
-      "url": "http://localhost:5888",
+      "url": "http://localhost:5173",
       "env": { "NODE_ENV": "development" },
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}"

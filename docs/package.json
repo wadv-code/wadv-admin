@@ -2,12 +2,15 @@
   "name": "@wadv/docs",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@vite-pwa/vitepress": "^0.5.3",
+    "markdown-it-custom-attrs": "^1.0.2",
     "vitepress": "^1.5.0"
   }
 }
