@@ -1,0 +1,64 @@
+{
+  "name": "wadv-admin",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "monorepo",
+    "turbo",
+    "wadv",
+    "wadv admin",
+    "wadv pro",
+    "vue",
+    "vue admin",
+    "vue wadv admin",
+    "vue wadv admin pro",
+    "vue3"
+  ],
+  "homepage": "https://github.com/wadv-code/wadv-admin",
+  "bugs": "https://github.com/wadv-code/wadv-admin/issues",
+  "repository": "wadv-code/wadv-admin.git",
+  "author": {
+    "name": "WAdv",
+    "email": "853925809@qq.com",
+    "url": "https://github.com/wadv-code"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "turbo-run dev",
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "dev:docs": "pnpm -F @wadv/docs run dev",
+    "build:docs": "pnpm -F @wadv/docs run build",
+    "preview:docs": "pnpm -F @wadv/docs run preview",
+    "dev:admin": "pnpm -F @wadv/admin run dev",
+    "build:admin": "pnpm -F @wadv/admin run build",
+    "preview:admin": "pnpm -F @wadv/admin run preview",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "pnpm -r run stub --if-present",
+    "clean-only": "node ./scripts/clean.mjs",
+    "clean": "pnpm clean-only --del-lock",
+    "reinstall": "pnpm clean-only --del-lock && pnpm install",
+    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
+    "changeset": "pnpm exec changeset"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.9",
+    "@types/node": "^22.9.0",
+    "@wadv/turbo-run": "workspace:*",
+    "prettier": "^3.2.5",
+    "turbo": "^2.3.0",
+    "typescript": "5.5.4",
+    "unbuild": "^2.0.0"
+  },
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": ">=18"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "*"
+      }
+    }
+  }
+}

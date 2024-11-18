@@ -1,0 +1,6 @@
+packages:
+  - "docs"
+  - "admin"
+  - "apps/*"
+  - "packages/*"
+  - "scripts/*"

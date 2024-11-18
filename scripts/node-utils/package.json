@@ -1,0 +1,35 @@
+{
+  "name": "@wadv/node-utils",
+  "version": "1.0.0",
+  "private": true,
+  "author": {
+    "name": "wadv",
+    "email": "853925809@qq.com",
+    "url": "https://gitee.com/wangdachuia/wadv-admin"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "stub": "pnpm unbuild --stub"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "devDependencies": {
+    "@manypkg/get-packages": "^2.2.2",
+    "chalk": "^5.3.0",
+    "consola": "^3.2.3",
+    "execa": "^9.5.1",
+    "find-up": "^7.0.0"
+  }
+}
