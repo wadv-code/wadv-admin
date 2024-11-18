@@ -9,8 +9,8 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "@vite-pwa/vitepress": "^0.5.3",
-    "markdown-it-custom-attrs": "^1.0.2",
-    "vitepress": "^1.5.0"
+    "@vite-pwa/vitepress": "catalog:",
+    "markdown-it-custom-attrs": "catalog:",
+    "vitepress": "catalog:"
   }
 }

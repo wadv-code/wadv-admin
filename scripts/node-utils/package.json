@@ -26,10 +26,10 @@
     }
   },
   "devDependencies": {
-    "@manypkg/get-packages": "^2.2.2",
-    "chalk": "^5.3.0",
-    "consola": "^3.2.3",
-    "execa": "^9.5.1",
-    "find-up": "^7.0.0"
+    "@manypkg/get-packages": "catalog:",
+    "chalk": "catalog:",
+    "consola": "catalog:",
+    "execa": "catalog:",
+    "find-up": "catalog:"
   }
 }

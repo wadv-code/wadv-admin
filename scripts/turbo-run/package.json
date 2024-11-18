@@ -27,8 +27,8 @@
     "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@clack/prompts": "^0.8.1",
     "@wadv/node-utils": "workspace:*",
-    "cac": "^6.7.14"
+    "@clack/prompts": "catalog:",
+    "cac": "catalog:"
   }
 }

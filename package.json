@@ -42,13 +42,13 @@
     "changeset": "pnpm exec changeset"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.9",
-    "@types/node": "^22.9.0",
     "@wadv/turbo-run": "workspace:*",
-    "prettier": "^3.2.5",
-    "turbo": "^2.3.0",
-    "typescript": "5.5.4",
-    "unbuild": "^2.0.0"
+    "@changesets/cli": "catalog:",
+    "@types/node": "catalog:",
+    "prettier": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:"
   },
   "packageManager": "pnpm@9.12.3",
   "engines": {
