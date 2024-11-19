@@ -110,7 +110,7 @@ catalogs:
       version: 3.3.3
     radix-vue:
       specifier: ^1.9.9
-      version: 1.9.9
+      version: 1.9.10
     tailwind-merge:
       specifier: ^2.5.4
       version: 2.5.4
@@ -302,7 +302,7 @@ importers:
         version: 2.2.6(typescript@5.6.3)(vue@3.5.13(typescript@5.6.3))
       radix-vue:
         specifier: 'catalog:'
-        version: 1.9.9(vue@3.5.13(typescript@5.6.3))
+        version: 1.9.10(vue@3.5.13(typescript@5.6.3))
       vue:
         specifier: 'catalog:'
         version: 3.5.13(typescript@5.6.3)
@@ -423,7 +423,7 @@ importers:
         version: 0.460.0(vue@3.5.13(typescript@5.6.3))
       radix-vue:
         specifier: 'catalog:'
-        version: 1.9.9(vue@3.5.13(typescript@5.6.3))
+        version: 1.9.10(vue@3.5.13(typescript@5.6.3))
       tailwind-merge:
         specifier: 'catalog:'
         version: 2.5.4
@@ -5343,8 +5343,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  radix-vue@1.9.9:
-    resolution: {integrity: sha512-DuL2o7jxNjzlSP5Ko+kJgrW5db+jC3RlnYQIs3WITTqgzfdeP7hXjcqIUveY1f0uXRpOAN3OAd5MZ/SpRyQzQQ==}
+  radix-vue@1.9.10:
+    resolution: {integrity: sha512-+4+J1v5A+4wbkyVr7VcjR1Zpm3K2hWJQCLgAiHSdrISaj+hPqYSeppP4yTnXQAI4B99myyihxkiC63YhTuvFBw==}
     peerDependencies:
       vue: '>= 3.2.0'
 
@@ -11915,7 +11915,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  radix-vue@1.9.9(vue@3.5.13(typescript@5.6.3)):
+  radix-vue@1.9.10(vue@3.5.13(typescript@5.6.3)):
     dependencies:
       '@floating-ui/dom': 1.6.12
       '@floating-ui/vue': 1.1.5(vue@3.5.13(typescript@5.6.3))

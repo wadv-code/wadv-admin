@@ -5,7 +5,7 @@ layout: home
 hero:
   name: 'WAdv Admin'
   text: 'WAdv快速上手指南'
-  tagline: 基于 Vue3、Pinia、Vite、TypeScript、.Net8、Entity Framework Core等最新技术栈。
+  tagline: 基于 Vue3、Pinia、Vite、TypeScript等最新技术栈。
   image:
     src: /dog.svg
     alt: WAdv Admin

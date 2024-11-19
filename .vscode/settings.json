@@ -1,10 +1,5 @@
 {
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ],
-  "tailwindCSS.experimental.configFile": "internal/tailwind-config/src/index.ts",
+  "tailwindCSS.experimental.configFile": "scripts/tailwind-config/src/index.ts",
   // workbench
   "workbench.list.smoothScrolling": true,
   "workbench.startupEditor": "newUntitledFile",
@@ -205,7 +200,7 @@
   ],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.{ext}",
   "i18n-ally.enabledParsers": ["json"],
-  "i18n-ally.sourceLanguage": "en-US",
+  "i18n-ally.sourceLanguage": "en",
   "i18n-ally.displayLanguage": "zh-CN",
   "i18n-ally.enabledFrameworks": ["vue", "react"],
   "i18n-ally.keystyle": "nested",
@@ -227,8 +222,5 @@
   "commentTranslate.hover.enabled": false,
   "commentTranslate.multiLineMerge": true,
   "vue.server.hybridMode": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "wadv"
-  ]
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
