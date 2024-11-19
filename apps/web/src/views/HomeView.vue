@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { Button } from '@wadv/shadcn-ui'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <Button>最贵的</Button>
+    <div class="flex flex-auto"></div>
   </main>
 </template>

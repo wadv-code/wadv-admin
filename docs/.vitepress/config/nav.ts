@@ -1,4 +1,4 @@
-import { type DefaultTheme } from "vitepress";
+import { type DefaultTheme } from 'vitepress';
 
 /**
  * 导航栏
@@ -6,7 +6,7 @@ import { type DefaultTheme } from "vitepress";
  */
 export function nav(): DefaultTheme.NavItem[] {
   return [
-    { text: "Home", link: "/" },
-    { text: "Examples", link: "/markdown-examples" },
+    { text: 'Home', link: '/' },
+    { text: 'Examples', link: '/markdown-examples' },
   ];
 }

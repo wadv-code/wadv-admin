@@ -26,6 +26,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "turbo-run dev",
+    "dev:turbo": "turbo dev",
     "lint": "turbo lint",
     "build": "turbo build",
     "dev:docs": "pnpm -F @wadv/docs run dev",
@@ -34,30 +35,41 @@
     "dev:admin": "pnpm -F @wadv/admin run dev",
     "build:admin": "pnpm -F @wadv/admin run build",
     "preview:admin": "pnpm -F @wadv/admin run preview",
+    "dev:web": "pnpm -F @wadv/web run dev",
+    "build:web": "pnpm -F @wadv/web run build",
+    "preview:web": "pnpm -F @wadv/web run preview",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test:unit": "turbo test:unit",
-    "test:e2e": "turbo run test:e2e",
     "postinstall": "pnpm -r run stub --if-present",
     "clean-only": "node ./scripts/clean.mjs",
     "clean": "pnpm clean-only --del-lock",
     "reinstall": "pnpm clean-only --del-lock && pnpm install",
-    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
-    "changeset": "pnpm exec changeset"
+    "changeset": "pnpm exec changeset",
+    "update:deps": "npx taze -r -w",
+    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile"
   },
   "devDependencies": {
+    "@wadv/turbo-run": "workspace:*",
+    "@wadv/tailwind-config": "workspace:*",
+    "@wadv/tsconfig": "workspace:*",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
-    "@wadv/turbo-run": "workspace:*",
+    "autoprefixer": "catalog:",
     "prettier": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
-    "unbuild": "catalog:"
+    "unbuild": "catalog:",
+    "tailwindcss": "catalog:",
+    "vitest": "catalog:",
+    "vite": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@9.13.2",
   "engines": {
-    "node": ">=18"
+    "node": ">=20",
+    "pnpm": ">=9.12.0"
   },
   "pnpm": {
     "peerDependencyRules": {

@@ -13,7 +13,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", "dist.zip", ".vitepress/dist.zip", ".vitepress/dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

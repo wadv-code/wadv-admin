@@ -1,32 +1,32 @@
-import { defineConfig } from "vitepress";
-import mdItCustomAttrs from "markdown-it-custom-attrs";
+import { defineConfig } from 'vitepress';
+import mdItCustomAttrs from 'markdown-it-custom-attrs';
 
-import { zhSearch } from "./language";
-import { nav } from "./nav";
-import { head, pwa } from "./cfg";
+import { zhSearch } from './language';
+import { nav } from './nav';
+import { head, pwa } from './cfg';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "WAdv Docs",
-  description: "企业级管理系统框架",
-  srcDir: "src",
-  base: "/docs/",
+  title: 'WAdv Docs',
+  description: '企业级管理系统框架',
+  srcDir: 'src',
+  base: '/docs/',
   head: head(),
   pwa: pwa(),
   markdown: {
     preConfig: (md) => {
       // use more markdown-it plugins!
-      md.use(mdItCustomAttrs, "image", {
-        "data-fancybox": "gallery",
+      md.use(mdItCustomAttrs, 'image', {
+        'data-fancybox': 'gallery',
       });
     },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/cat.svg",
+    logo: '/cat.svg',
     nav: nav(),
     search: {
-      provider: "local",
+      provider: 'local',
       options: {
         detailedView: true,
         locales: {
@@ -37,47 +37,45 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "Examples",
+        text: 'Examples',
         items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
+          { text: 'Markdown Examples', link: '/markdown-examples' },
+          { text: 'Runtime API Examples', link: '/api-examples' },
         ],
       },
     ],
 
-    socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
 
-    darkModeSwitchLabel: "主题",
-    darkModeSwitchTitle: "切换到深色模式",
+    darkModeSwitchLabel: '主题',
+    darkModeSwitchTitle: '切换到深色模式',
     docFooter: {
-      next: "下一页",
-      prev: "上一页",
+      next: '下一页',
+      prev: '上一页',
     },
     outline: {
-      label: "页面导航",
+      label: '页面导航',
     },
-    returnToTopLabel: "回到顶部",
-    sidebarMenuLabel: "菜单",
+    returnToTopLabel: '回到顶部',
+    sidebarMenuLabel: '菜单',
   },
   vite: {
     build: {
       chunkSizeWarningLimit: Infinity,
-      minify: "terser",
+      minify: 'terser',
     },
     json: {
       stringify: true,
     },
     server: {
       fs: {
-        allow: ["../.."],
+        allow: ['../..'],
       },
       host: true,
       port: 6173,
     },
     ssr: {
-      external: ["@vue/repl"],
+      external: ['@vue/repl'],
     },
   },
 });

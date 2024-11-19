@@ -14,12 +14,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@wadv/shadcn-ui": "workspace:*",
     "pinia": "catalog:",
     "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue-router": "catalog:",
+    "radix-vue": "catalog:"
   },
   "devDependencies": {
-    "@wadv/types": "workspace:*",
     "@tsconfig/node22": "catalog:",
     "@types/jsdom": "catalog:",
     "@types/node": "catalog:",
@@ -30,6 +31,7 @@
     "@vue/eslint-config-typescript": "catalog:",
     "@vue/test-utils": "catalog:",
     "@vue/tsconfig": "catalog:",
+    "@wadv/types": "workspace:*",
     "eslint": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "jsdom": "catalog:",

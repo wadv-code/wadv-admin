@@ -1,0 +1,43 @@
+{
+  "name": "@wadv/utils",
+  "version": "1.0.0",
+  "author": {
+    "name": "wadv",
+    "email": "853925809@qq.com",
+    "url": "https://gitee.com/wangdachuia/wadv-admin"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "stub": "pnpm unbuild --stub"
+  },
+  "keywords": [],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "./lib": {
+      "types": "./src/lib/index.ts",
+      "development": "./src/lib/index.ts",
+      "default": "./dist/lib/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      "./lib": {
+        "types": "./dist/lib/index.d.ts",
+        "default": "./dist/lib/index.mjs"
+      }
+    }
+  },
+  "dependencies": {
+    "clsx": "catalog:",
+    "lodash.clonedeep": "catalog:",
+    "tailwind-merge": "catalog:"
+  },
+  "devDependencies": {
+    "@types/lodash.clonedeep": "catalog:"
+  }
+}

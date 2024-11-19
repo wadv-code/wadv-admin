@@ -1,5 +1,5 @@
 ---
-"@wadv/turbo-run": minor
+'@wadv/turbo-run': minor
 ---
 
 first commit

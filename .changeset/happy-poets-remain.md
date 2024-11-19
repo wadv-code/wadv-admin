@@ -1,5 +1,5 @@
 ---
-"@wadv/node-utils": major
+'@wadv/node-utils': major
 ---
 
 first commit.
