@@ -1,7 +1,5 @@
 {
   "name": "wadv-admin",
-  "version": "1.0.0",
-  "private": true,
   "keywords": [
     "monorepo",
     "turbo",
@@ -14,6 +12,8 @@
     "vue wadv admin pro",
     "vue3"
   ],
+  "version": "1.0.0",
+  "private": true,
   "homepage": "https://github.com/wadv-code/wadv-admin",
   "bugs": "https://github.com/wadv-code/wadv-admin/issues",
   "repository": "wadv-code/wadv-admin.git",
@@ -23,6 +23,7 @@
     "url": "https://github.com/wadv-code"
   },
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "turbo-run dev",
     "lint": "turbo lint",
@@ -34,6 +35,8 @@
     "build:admin": "pnpm -F @wadv/admin run build",
     "preview:admin": "pnpm -F @wadv/admin run preview",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test:unit": "turbo test:unit",
+    "test:e2e": "turbo run test:e2e",
     "postinstall": "pnpm -r run stub --if-present",
     "clean-only": "node ./scripts/clean.mjs",
     "clean": "pnpm clean-only --del-lock",
@@ -42,9 +45,11 @@
     "changeset": "pnpm exec changeset"
   },
   "devDependencies": {
-    "@wadv/turbo-run": "workspace:*",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
+    "@wadv/turbo-run": "workspace:*",
     "prettier": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",

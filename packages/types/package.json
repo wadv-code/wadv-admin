@@ -1,0 +1,23 @@
+{
+  "name": "@wadv/types",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wadv-code/wadv-admin",
+  "bugs": "https://github.com/wadv-code/wadv-admin/issues",
+  "repository": "wadv-code/wadv-admin.git",
+  "author": {
+    "name": "WAdv",
+    "email": "853925809@qq.com",
+    "url": "https://github.com/wadv-code"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./global": {
+      "types": "./global.d.ts"
+    }
+  },
+  "dependencies": {
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}

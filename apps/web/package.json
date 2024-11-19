@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@wadv/web",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -19,6 +19,7 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@wadv/types": "workspace:*",
     "@tsconfig/node22": "catalog:",
     "@types/jsdom": "catalog:",
     "@types/node": "catalog:",

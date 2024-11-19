@@ -1,5 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "pnpm-lock.yaml",
+    "**/.env.*local",
+    "**/tsconfig*.json",
+    "scripts/*/src/**/*.ts",
+    "scripts/*/src/**/*.json",
+    "packages/*/tsconfig.json"
+  ],
   "ui": "tui",
   "tasks": {
     "build": {
