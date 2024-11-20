@@ -46,7 +46,9 @@
     "changeset": "pnpm exec changeset",
     "update:deps": "npx taze -r -w",
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
-    "replace": "node ./scripts/replace.mjs"
+    "replace": "node ./scripts/replace.mjs",
+    "test:unit": "vitest run --dom",
+    "test:e2e": "turbo run test:e2e"
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
@@ -57,6 +59,7 @@
     "@wadv/tsconfig": "workspace:*",
     "@wadv/turbo-run": "workspace:*",
     "autoprefixer": "catalog:",
+    "happy-dom": "catalog:",
     "prettier": "catalog:",
     "tailwindcss": "catalog:",
     "turbo": "catalog:",
