@@ -16,44 +16,14 @@ async function replaceTargetsRecursively(currentDir, targets, excludes) {
       const itemPath = join(currentDir, item);
       if (!matchPattern(itemPath, excludes)) {
         // 锁定
-        const target = findPattern(
-          itemPath,
-          targets.map((v) => v.pattern),
-        );
+        const target = findPattern(itemPath, targets);
+        // 修改文件
         if (target) modifyTargetsFile(itemPath, target);
         // 目录
         const stat = await fs.lstat(itemPath);
-        if (stat.isDirectory()) {
-          await replaceTargetsRecursively(itemPath, targets, excludes);
-        }
-
-        // // 锁定
-        // if (
-        //   findPattern(
-        //     itemPath,
-        //     targets.map((v) => v.pattern),
-        //   )
-        // ) {
-        //   //  const target = targets.find((f) => f.pattern === item);
-        //   await modifyTargetsFile(target, itemPath);
-        // }
-        // // 目录
-        // const stat = await fs.lstat(itemPath);
-        // if (stat.isDirectory()) {
-        //   await replaceTargetsRecursively(itemPath, targets, excludes);
-        // }
+        if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes);
       }
-      // if (!excludes.includes(item)) {
-      //   const target = targets.find((f) => f.pattern === item);
-      //   // 锁定
-      //   if (target) await modifyTargetsFile(target, itemPath);
-      //   // 其他
-      //   const stat = await fs.lstat(itemPath);
-      //   if (stat.isDirectory()) {
-      //     await replaceTargetsRecursively(itemPath, targets, excludes);
-      //   }
-      // }
-    } catch (error) {
+    } catch {
       // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
     }
   }
@@ -71,10 +41,12 @@ function matchPattern(itemPath, excludes) {
 /**
  * 检出匹配排除目录或文件
  * @param {string} itemPath - 当前遍历的目录路径
- * @param {string[]} excludes - 匹配目标
+ * @param {string[]} targets - 匹配目标
  */
-function findPattern(itemPath, excludes) {
-  return excludes.find((pattern) => minimatch(itemPath, pattern, { matchBase: true, nodir: true }));
+function findPattern(itemPath, targets) {
+  return targets.find((target) =>
+    minimatch(itemPath, target.pattern, { matchBase: true, nodir: true }),
+  );
 }
 
 /**
@@ -87,12 +59,14 @@ function modifyTargetsFile(itemPath, target) {
   const data = readFileSync(itemPath, 'utf8');
   // 组合正则
   const reg = new RegExp(target.target, 'g');
-  // 修改文件内容
-  const modifiedData = data.replace(reg, target.replace);
-  // 异步写入新内容到文件
-  writeFileSync(itemPath, modifiedData, 'utf8');
-  // 替换完成
-  console.log(`Replace: ${itemPath}`);
+  if (reg.test(data)) {
+    // 修改文件内容
+    const modifiedData = data.replace(reg, target.replace);
+    // 异步写入新内容到文件
+    writeFileSync(itemPath, modifiedData, 'utf8');
+    // 替换完成
+    console.log(`Replace: ${itemPath}`);
+  }
 }
 
 (async function startReplace() {
@@ -103,9 +77,9 @@ function modifyTargetsFile(itemPath, target) {
    * replace 替换字符串
    */
   const targets = [
-    // 替换成中文
+    // 范围匹配
     {
-      pattern: 'AboutView.vue',
+      pattern: '*.{vue,js,ts,jsx,tsx,svelte,astro,html}',
       target: 'This is a about page',
       replace: '这是一个关于我们的页面',
     },
@@ -126,7 +100,7 @@ function modifyTargetsFile(itemPath, target) {
   try {
     await replaceTargetsRecursively(rootDir, targets, excludes);
     console.log('Replace process completed.');
-  } catch (error) {
+  } catch {
     // console.error(`Unexpected error during replace: ${error.message}`);
   }
 })();
