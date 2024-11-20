@@ -22,8 +22,8 @@ async function cleanTargetsRecursively(currentDir, targets) {
       if (stat.isDirectory()) {
         await cleanTargetsRecursively(itemPath, targets);
       }
-    } catch {
-      console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
+    } catch(error) {
+      // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
     }
   }
 }
@@ -44,6 +44,6 @@ async function cleanTargetsRecursively(currentDir, targets) {
     await cleanTargetsRecursively(rootDir, cleanupTargets);
     console.log('Cleanup process completed.');
   } catch (error) {
-    console.error(`Unexpected error during cleanup: ${error.message}`);
+    // console.error(`Unexpected error during cleanup: ${error.message}`);
   }
 })();

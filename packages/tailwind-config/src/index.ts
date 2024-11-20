@@ -123,12 +123,7 @@ export default {
     ),
   ],
   darkMode: 'selector',
-  plugins: [
-    animate,
-    typographyPlugin,
-    addDynamicIconSelectors(),
-    enterAnimationPlugin,
-  ],
+  plugins: [animate, typographyPlugin, addDynamicIconSelectors(), enterAnimationPlugin],
   prefix: '',
   safelist: ['dark'],
   theme: {

@@ -23,8 +23,8 @@ async function replaceTargetsRecursively(currentDir, targets, excludes) {
           await replaceTargetsRecursively(itemPath, targets, excludes);
         }
       }
-    } catch {
-      console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
+    } catch(error) {
+      // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
     }
   }
 }
@@ -59,7 +59,7 @@ async function modifyTargetsFile(target, itemPath) {
     {
       filename: 'AboutView.vue',
       target: 'This is a about page',
-      replace: '这是一个关于页面',
+      replace: '这是一个关于我们的页面',
     },
     // 替换成时间
     {
@@ -79,6 +79,6 @@ async function modifyTargetsFile(target, itemPath) {
     await replaceTargetsRecursively(rootDir, targets, excludes);
     console.log('Replace process completed.');
   } catch (error) {
-    console.error(`Unexpected error during replace: ${error.message}`);
+    // console.error(`Unexpected error during replace: ${error.message}`);
   }
 })();

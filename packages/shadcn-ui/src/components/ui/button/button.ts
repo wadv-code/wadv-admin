@@ -16,8 +16,7 @@ export const buttonVariants = cva(
         xs: 'h-8 w-8 rounded-sm px-1 text-xs',
       },
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
         destructive:
           'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive-hover',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
@@ -26,8 +25,7 @@ export const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         outline:
           'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-        secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
       },
     },
   },
