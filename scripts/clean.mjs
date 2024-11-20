@@ -23,9 +23,7 @@ async function cleanTargetsRecursively(currentDir, targets) {
         await cleanTargetsRecursively(itemPath, targets);
       }
     } catch {
-      // console.error(
-      //   `Error handling item ${item} in ${currentDir}: ${error.message}`,
-      // );
+      console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
     }
   }
 }
@@ -40,9 +38,7 @@ async function cleanTargetsRecursively(currentDir, targets) {
     cleanupTargets.push('pnpm-lock.yaml');
   }
 
-  console.log(
-    `Starting cleanup of targets: ${cleanupTargets.join(', ')} from root: ${rootDir}`,
-  );
+  console.log(`Starting cleanup of targets: ${cleanupTargets.join(', ')} from root: ${rootDir}`);
 
   try {
     await cleanTargetsRecursively(rootDir, cleanupTargets);

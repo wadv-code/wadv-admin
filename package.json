@@ -45,28 +45,29 @@
     "reinstall": "pnpm clean-only --del-lock && pnpm install",
     "changeset": "pnpm exec changeset",
     "update:deps": "npx taze -r -w",
-    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile"
+    "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
+    "replace": "node ./scripts/replace.mjs"
   },
   "devDependencies": {
-    "@wadv/turbo-run": "workspace:*",
-    "@wadv/tailwind-config": "workspace:*",
-    "@wadv/tsconfig": "workspace:*",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
+    "@wadv/tailwind-config": "workspace:*",
+    "@wadv/tsconfig": "workspace:*",
+    "@wadv/turbo-run": "workspace:*",
     "autoprefixer": "catalog:",
     "prettier": "catalog:",
+    "tailwindcss": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",
-    "tailwindcss": "catalog:",
-    "vitest": "catalog:",
     "vite": "catalog:",
+    "vitest": "catalog:",
     "vue": "catalog:",
     "vue-tsc": "catalog:"
   },
-  "packageManager": "pnpm@9.13.2",
+  "packageManager": "pnpm@9.14.1",
   "engines": {
     "node": ">=20",
     "pnpm": ">=9.12.0"

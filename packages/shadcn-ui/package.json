@@ -51,8 +51,8 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@wadv/utils": "workspace:*",
     "@vitejs/plugin-vue": "catalog:",
+    "@wadv/utils": "workspace:*",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
