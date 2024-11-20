@@ -58,7 +58,7 @@ async function modifyTargetsFile(target, itemPath) {
     // 替换成中文
     {
       filename: 'AboutView.vue',
-      target: 'This is an about page',
+      target: 'This is a about page',
       replace: '这是一个关于页面',
     },
     // 替换成时间
