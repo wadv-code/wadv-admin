@@ -1,5 +1,5 @@
 {
-  "tailwindCSS.experimental.configFile": "scripts/tailwind-config/src/index.ts",
+  "tailwindCSS.experimental.configFile": "packages/tailwind-config/src/index.ts",
   // workbench
   "workbench.list.smoothScrolling": true,
   "workbench.startupEditor": "newUntitledFile",

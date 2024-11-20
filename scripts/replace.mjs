@@ -1,5 +1,6 @@
 import { promises as fs, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { minimatch } from 'minimatch';
 
 const rootDir = process.cwd();
 
@@ -13,28 +14,75 @@ async function replaceTargetsRecursively(currentDir, targets, excludes) {
   for (const item of items) {
     try {
       const itemPath = join(currentDir, item);
-      if (!excludes.includes(item)) {
-        const target = targets.find((f) => f.filename === item);
+      if (!matchPattern(itemPath, excludes)) {
         // 锁定
-        if (target) await modifyTargetsFile(target, itemPath);
-        // 其他
+        const target = findPattern(
+          itemPath,
+          targets.map((v) => v.pattern),
+        );
+        if (target) modifyTargetsFile(itemPath, target);
+        // 目录
         const stat = await fs.lstat(itemPath);
         if (stat.isDirectory()) {
           await replaceTargetsRecursively(itemPath, targets, excludes);
         }
+
+        // // 锁定
+        // if (
+        //   findPattern(
+        //     itemPath,
+        //     targets.map((v) => v.pattern),
+        //   )
+        // ) {
+        //   //  const target = targets.find((f) => f.pattern === item);
+        //   await modifyTargetsFile(target, itemPath);
+        // }
+        // // 目录
+        // const stat = await fs.lstat(itemPath);
+        // if (stat.isDirectory()) {
+        //   await replaceTargetsRecursively(itemPath, targets, excludes);
+        // }
       }
-    } catch(error) {
+      // if (!excludes.includes(item)) {
+      //   const target = targets.find((f) => f.pattern === item);
+      //   // 锁定
+      //   if (target) await modifyTargetsFile(target, itemPath);
+      //   // 其他
+      //   const stat = await fs.lstat(itemPath);
+      //   if (stat.isDirectory()) {
+      //     await replaceTargetsRecursively(itemPath, targets, excludes);
+      //   }
+      // }
+    } catch (error) {
       // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
     }
   }
 }
 
 /**
- * 修改文件内容
- * @param {object} target - 替换目标
+ * 匹配排除目录或文件
  * @param {string} itemPath - 当前遍历的目录路径
+ * @param {string[]} excludes - 匹配目标
  */
-async function modifyTargetsFile(target, itemPath) {
+function matchPattern(itemPath, excludes) {
+  return excludes.some((pattern) => minimatch(itemPath, pattern, { matchBase: true, nodir: true }));
+}
+
+/**
+ * 检出匹配排除目录或文件
+ * @param {string} itemPath - 当前遍历的目录路径
+ * @param {string[]} excludes - 匹配目标
+ */
+function findPattern(itemPath, excludes) {
+  return excludes.find((pattern) => minimatch(itemPath, pattern, { matchBase: true, nodir: true }));
+}
+
+/**
+ * 修改文件内容
+ * @param {string} itemPath - 当前遍历的目录路径
+ * @param {object} target - 替换目标
+ */
+function modifyTargetsFile(itemPath, target) {
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
   // 组合正则
@@ -50,20 +98,20 @@ async function modifyTargetsFile(target, itemPath) {
 (async function startReplace() {
   // 要修改的文件
   /**
-   * filename 文件名
+   * pattern 匹配名称或者模式
    * target 目标字符串
    * replace 替换字符串
    */
   const targets = [
     // 替换成中文
     {
-      filename: 'AboutView.vue',
+      pattern: 'AboutView.vue',
       target: 'This is a about page',
       replace: '这是一个关于我们的页面',
     },
     // 替换成时间
     {
-      filename: 'example.txt',
+      pattern: 'example.txt',
       target: '__today__',
       replace: new Date().toLocaleDateString(),
     },
@@ -71,7 +119,7 @@ async function modifyTargetsFile(target, itemPath) {
   // 排除目录或文件夹
   const excludes = ['node_modules', 'dist', '.turbo', 'dist.zip'];
 
-  const replaceTargets = [...targets.map((v) => v.filename)];
+  const replaceTargets = [...targets.map((v) => v.pattern)];
 
   console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}`);
 

@@ -36,6 +36,7 @@ catalog:
   happy-dom: ^15.11.6
   lodash.clonedeep: ^4.5.0
   lucide-vue-next: ^0.460.0
+  minimatch: ^10.0.1
   markdown-it-custom-attrs: ^1.0.2
   npm-run-all2: ^7.0.1
   pinia: ^2.2.6

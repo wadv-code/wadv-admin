@@ -1,14 +1,12 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@wadv/tsconfig/web-app.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["./src/*"]
     }
-  ]
+  },
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
