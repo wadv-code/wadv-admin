@@ -1,12 +1,23 @@
-import { promises as fs, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import {
+  copyFileSync,
+  existsSync,
+  promises as fs,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
+import { dirname, join, normalize } from 'node:path';
 import { minimatch } from 'minimatch';
 import type { ReplaceTarget, ReplaceTargets, StartReplaceOptions } from '../global';
 
 // 根目录
 const rootDir = process.cwd();
-// 计数
+// 备份文件名
+const backupDir = 'backup_file';
+// 当前目录计数
 let count = 0;
+// 总计数
+let allCount = 0;
 
 /**
  * 递归查找并删除目标目录
@@ -16,6 +27,7 @@ async function replaceTargetsRecursively(
   currentDir: string,
   targets: ReplaceTargets,
   excludes: string[],
+  root?: string,
 ) {
   const items = await fs.readdir(currentDir);
 
@@ -26,10 +38,10 @@ async function replaceTargetsRecursively(
         // 锁定
         const target = findPattern(itemPath, targets);
         // 修改文件
-        if (target) await modifyTargetsFile(itemPath, target);
+        if (target) await modifyTargetsFile(itemPath, target, root);
         // 目录
         const stat = await fs.lstat(itemPath);
-        if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes);
+        if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes, root);
       }
     } catch {
       // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
@@ -59,13 +71,16 @@ function findPattern(itemPath: string, targets: ReplaceTargets) {
  * 修改文件内容
  * @param {string} itemPath - 当前遍历的目录路径
  * @param {object} target - 替换目标
+ * @param {string} root - 根目录
  */
-async function modifyTargetsFile(itemPath: string, target: ReplaceTarget) {
+async function modifyTargetsFile(itemPath: string, target: ReplaceTarget, root: string = rootDir) {
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
   // 组合正则
   const reg = new RegExp(target.target, 'g');
   if (reg.test(data)) {
+    // 备份
+    copyAndBackup(itemPath, root);
     // 修改文件内容
     const modifiedData = data.replace(reg, target.replace);
     // 异步写入新内容到文件
@@ -78,22 +93,104 @@ async function modifyTargetsFile(itemPath: string, target: ReplaceTarget) {
 }
 
 /**
- * pattern 匹配名称或者模式
- * target 目标字符串
- * replace 替换字符串
+ * 确保目录存在
+ * @param itemPath - 当前遍历的目录路径
+ * @returns
  */
-async function startReplace({ targets, excludes }: StartReplaceOptions) {
-  const replaceTargets = [...targets.map((v) => v.pattern)];
+function ensureDirectoryExistence(itemPath: string) {
+  const fileName = dirname(itemPath);
+  if (existsSync(fileName)) {
+    return true;
+  }
+  ensureDirectoryExistence(fileName);
+  mkdirSync(fileName);
+}
 
-  console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}\n`);
+/**
+ * 备份
+ * @param itemPath - 当前遍历的目录路径
+ * @param root - 根目录
+ */
+async function copyAndBackup(itemPath: string, root: string = rootDir) {
+  const date = new Date();
+  const dateString = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日${date.getHours()}时${date.getMinutes()}分`;
+  // 组合正则
+  const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
+  const joinPath = normalize(join(process.cwd(), `/${backupDir}/${dateString}/`));
+  const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
+  console.log(writePath);
+  // 确保目录存在
+  ensureDirectoryExistence(writePath);
+  // 备份文件;
+  copyFileSync(itemPath, writePath);
+}
+
+async function startReplace({ targets, excludes, root }: StartReplaceOptions) {
+  const replaceTargets = [...targets.map((v) => v.pattern)];
+  console.log(`\x1B[36m\nTargets: ${replaceTargets.join(', ')}\x1B[0m`);
+  console.log(`\x1B[36mRoot: ${root || rootDir}\x1B[0m`);
 
   try {
-    await replaceTargetsRecursively(rootDir, targets, excludes);
-    // 结束
-    console.log(`\nThe replace process has been completed for ${count} times\n`);
+    await replaceTargetsRecursively(root || rootDir, targets, excludes, root);
+    // // 结束
+    // console.log(`\nThe replace process has been completed for ${count} times\n`);
+    // 计入总数
+    allCount += count;
+    // 清除当前目录计数
+    count = 0;
   } catch {
     // console.error(`Unexpected error during replace: ${error.message}`);
   }
 }
 
-export { startReplace };
+/**
+ * 全局替换
+ * @param {ReplaceTargets} root 指定根目录
+ * @param {string[]} excludes 排除文件
+ * @param {ReplaceTargets} targets 替换集合
+ *
+ * @description targets => [
+ *  {
+ *    pattern: '匹配模式支持“*”通配符',
+ *    target: '目标内容',
+ *    replace: '替换内容',
+ *    root: '匹配指定目录，不填默认本mjs为根目录目录',
+ *    flags: '正则标志不填默认"g"'
+ *  }
+ * ]
+ */
+async function start(option: StartReplaceOptions) {
+  const { targets, excludes = [] } = option;
+  const roots = targets.filter((f) => f.root);
+  const notRoots = targets.filter((f) => !f.root);
+
+  excludes.push(backupDir);
+
+  if (roots.length) {
+    console.warn(`\x1B[46mMultiple directory\x1B[0m`);
+    for (const item of roots) {
+      await startReplace({ ...option, targets: [item], root: item.root });
+      console.log(`'\x1B[32m${item.root} for ${allCount} times\n\x1B[0m`);
+    }
+    if (notRoots.length) await startReplace({ ...option, targets: notRoots });
+  } else {
+    console.warn(`\x1B[46mSingle directory\x1B[0m`);
+    startReplace(option);
+  }
+
+  console.log(`'\x1B[32m\nThe replace process completed a total of ${allCount} files\n\x1B[0m`);
+
+  // const replaceTargets = [...targets.map((v) => v.pattern)];
+
+  // console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}\n`);
+
+  // try {
+  //   await replaceTargetsRecursively(root || rootDir, targets, excludes);
+  //   // 结束
+  //   console.log(`\nThe replace process has been completed for ${count} times\n`);
+  // } catch {
+  //   // console.error(`Unexpected error during replace: ${error.message}`);
+  // }
+}
+
+export { start };
