@@ -77,7 +77,7 @@ function modifyTargetsFile(itemPath, target) {
    * replace 替换字符串
    */
   const targets = [
-    // 范围匹配
+    // 指定文件
     {
       pattern: '*.{vue,js,ts,jsx,tsx,svelte,astro,html}',
       target: 'This is a about page',
@@ -95,7 +95,7 @@ function modifyTargetsFile(itemPath, target) {
 
   const replaceTargets = [...targets.map((v) => v.pattern)];
 
-  console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}`);
+  console.log(`Starting replace of targets: \n${replaceTargets.join('\n, ')} \nfrom root: ${rootDir}`);
 
   try {
     await replaceTargetsRecursively(rootDir, targets, excludes);
