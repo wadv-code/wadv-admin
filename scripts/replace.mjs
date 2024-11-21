@@ -48,6 +48,6 @@ import { start } from '@wadv/utils/lib';
     // 排除文件
     excludes,
     // 指定目录不填默认"replace.mjs"所在为根目录
-    root: undefined,
+    // root: undefined,
   });
 })();
