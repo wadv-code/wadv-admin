@@ -1,4 +1,4 @@
-import { start } from '@wadv/utils/lib';
+import { start } from '@wadv/node-utils';
 
 /**
  * 全局替换

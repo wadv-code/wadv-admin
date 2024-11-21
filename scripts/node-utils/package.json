@@ -30,6 +30,7 @@
     "chalk": "catalog:",
     "consola": "catalog:",
     "execa": "catalog:",
-    "find-up": "catalog:"
+    "find-up": "catalog:",
+    "minimatch": "catalog:"
   }
 }

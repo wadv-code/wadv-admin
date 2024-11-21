@@ -59,7 +59,7 @@
     "@wadv/tsconfig": "workspace:*",
     "@wadv/turbo-run": "workspace:*",
     "@wadv/types": "workspace:*",
-    "@wadv/utils": "workspace:*",
+    "@wadv/node-utils": "workspace:*",
     "autoprefixer": "catalog:",
     "happy-dom": "catalog:",
     "prettier": "catalog:",

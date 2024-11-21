@@ -8,7 +8,6 @@ import {
 } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { minimatch } from 'minimatch';
-import type { ReplaceTarget, ReplaceTargets, StartReplaceOptions } from '../global';
 
 // 根目录
 const rootDir = process.cwd();

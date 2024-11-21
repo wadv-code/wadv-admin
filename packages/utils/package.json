@@ -35,7 +35,6 @@
   "dependencies": {
     "clsx": "catalog:",
     "lodash.clonedeep": "catalog:",
-    "minimatch": "catalog:",
     "tailwind-merge": "catalog:"
   },
   "devDependencies": {
