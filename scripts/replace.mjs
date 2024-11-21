@@ -3,6 +3,8 @@ import { join } from 'node:path';
 import { minimatch } from 'minimatch';
 
 const rootDir = process.cwd();
+// 计数
+let count = 0;
 
 /**
  * 递归查找并删除目标目录
@@ -18,7 +20,7 @@ async function replaceTargetsRecursively(currentDir, targets, excludes) {
         // 锁定
         const target = findPattern(itemPath, targets);
         // 修改文件
-        if (target) modifyTargetsFile(itemPath, target);
+        if (target) await modifyTargetsFile(itemPath, target);
         // 目录
         const stat = await fs.lstat(itemPath);
         if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes);
@@ -54,7 +56,7 @@ function findPattern(itemPath, targets) {
  * @param {string} itemPath - 当前遍历的目录路径
  * @param {object} target - 替换目标
  */
-function modifyTargetsFile(itemPath, target) {
+async function modifyTargetsFile(itemPath, target) {
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
   // 组合正则
@@ -66,6 +68,8 @@ function modifyTargetsFile(itemPath, target) {
     writeFileSync(itemPath, modifiedData, 'utf8');
     // 替换完成
     console.log(`* Replace: ${itemPath}`);
+    // 自增
+    count++;
   }
 }
 
@@ -99,7 +103,8 @@ function modifyTargetsFile(itemPath, target) {
 
   try {
     await replaceTargetsRecursively(rootDir, targets, excludes);
-    console.log('\nReplace process completed.');
+    // 结束
+    console.log(`\nThe replace process has been completed for ${count} times\n`);
   } catch {
     // console.error(`Unexpected error during replace: ${error.message}`);
   }

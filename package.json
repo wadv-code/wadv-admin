@@ -46,7 +46,7 @@
     "changeset": "pnpm exec changeset",
     "update:deps": "npx taze -r -w",
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
-    "replace": "node ./scripts/replace.mjs",
+    "replace": "cls && node ./scripts/replace.mjs",
     "test:unit": "vitest run --dom",
     "test:e2e": "turbo run test:e2e"
   },
