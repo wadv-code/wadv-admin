@@ -1,5 +1,5 @@
 import {
-  copyFileSync,
+  copyFile,
   existsSync,
   promises as fs,
   mkdirSync,
@@ -80,7 +80,7 @@ async function modifyTargetsFile(itemPath: string, target: ReplaceTarget, root: 
   const reg = new RegExp(target.target, 'g');
   if (reg.test(data)) {
     // 备份
-    copyAndBackup(itemPath, root);
+    await copyAndBackup(itemPath, root);
     // 修改文件内容
     const modifiedData = data.replace(reg, target.replace);
     // 异步写入新内容到文件
@@ -121,7 +121,12 @@ async function copyAndBackup(itemPath: string, root: string = rootDir) {
   // 确保目录存在
   await ensureDirectoryExistence(writePath);
   // 备份文件;
-  copyFileSync(itemPath, writePath);
+  await new Promise((resolve, reject) => {
+    copyFile(itemPath, writePath, (error) => {
+      if (error) return reject();
+      resolve(true);
+    });
+  });
 }
 
 async function startReplace({ targets, excludes, root = rootDir }: StartReplaceOptions) {
