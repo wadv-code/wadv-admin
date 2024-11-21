@@ -16,9 +16,6 @@
   "files": [
     "dist"
   ],
-  "bin": {
-    "replace-run": "./bin/replace.mjs"
-  },
   "sideEffects": false,
   "exports": {
     "./lib": {

@@ -1,17 +1,10 @@
-import type { ReplaceTargets } from '../global';
-import { startReplace } from '../lib/replace';
+import { startReplace } from '@wadv/utils';
 
 (async function () {
   // 排除目录或文件夹
-  const excludes: string[] = [
-    'node_modules',
-    'dist',
-    '.turbo',
-    'dist.zip',
-    '**/utils/src/bin/replace.ts',
-  ];
+  const excludes = ['node_modules', 'dist', '.turbo', 'dist.zip'];
   // 要修改的文件
-  const targets: ReplaceTargets = [
+  const targets = [
     // 指定文件
     {
       pattern: '*.{vue,js,ts,jsx,tsx,svelte,astro,html}',
