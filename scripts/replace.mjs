@@ -1,4 +1,4 @@
-import { startReplace } from '@wadv/utils';
+import { startReplace } from '@wadv/utils/lib';
 
 (async function () {
   // 排除目录或文件夹
