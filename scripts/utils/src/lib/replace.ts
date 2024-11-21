@@ -97,12 +97,12 @@ async function modifyTargetsFile(itemPath: string, target: ReplaceTarget, root: 
  * @param itemPath - 当前遍历的目录路径
  * @returns
  */
-function ensureDirectoryExistence(itemPath: string) {
+async function ensureDirectoryExistence(itemPath: string) {
   const fileName = dirname(itemPath);
   if (existsSync(fileName)) {
     return true;
   }
-  ensureDirectoryExistence(fileName);
+  await ensureDirectoryExistence(fileName);
   mkdirSync(fileName);
 }
 
@@ -120,7 +120,7 @@ async function copyAndBackup(itemPath: string, root: string = rootDir) {
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
   console.log(writePath);
   // 确保目录存在
-  ensureDirectoryExistence(writePath);
+  await ensureDirectoryExistence(writePath);
   // 备份文件;
   copyFileSync(itemPath, writePath);
 }
@@ -132,8 +132,6 @@ async function startReplace({ targets, excludes, root }: StartReplaceOptions) {
 
   try {
     await replaceTargetsRecursively(root || rootDir, targets, excludes, root);
-    // // 结束
-    // console.log(`\nThe replace process has been completed for ${count} times\n`);
     // 计入总数
     allCount += count;
     // 清除当前目录计数
@@ -164,6 +162,7 @@ async function start(option: StartReplaceOptions) {
   const roots = targets.filter((f) => f.root);
   const notRoots = targets.filter((f) => !f.root);
 
+  // 加入备份目录
   excludes.push(backupDir);
 
   if (roots.length) {
@@ -175,22 +174,10 @@ async function start(option: StartReplaceOptions) {
     if (notRoots.length) await startReplace({ ...option, targets: notRoots });
   } else {
     console.warn(`\x1B[46mSingle directory\x1B[0m`);
-    startReplace(option);
+    await startReplace(option);
   }
 
   console.log(`'\x1B[32m\nThe replace process completed a total of ${allCount} files\n\x1B[0m`);
-
-  // const replaceTargets = [...targets.map((v) => v.pattern)];
-
-  // console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}\n`);
-
-  // try {
-  //   await replaceTargetsRecursively(root || rootDir, targets, excludes);
-  //   // 结束
-  //   console.log(`\nThe replace process has been completed for ${count} times\n`);
-  // } catch {
-  //   // console.error(`Unexpected error during replace: ${error.message}`);
-  // }
 }
 
 export { start };
