@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "replace-run": "./bin/replace.mjs"
+  },
   "sideEffects": false,
   "exports": {
     "./lib": {
@@ -35,6 +38,7 @@
   "dependencies": {
     "clsx": "catalog:",
     "lodash.clonedeep": "catalog:",
+    "minimatch": "catalog:",
     "tailwind-merge": "catalog:"
   },
   "devDependencies": {
