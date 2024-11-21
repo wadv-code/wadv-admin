@@ -65,7 +65,7 @@ function modifyTargetsFile(itemPath, target) {
     // 异步写入新内容到文件
     writeFileSync(itemPath, modifiedData, 'utf8');
     // 替换完成
-    console.log(`Replace: ${itemPath}`);
+    console.log(`* Replace: ${itemPath}`);
   }
 }
 
@@ -95,11 +95,11 @@ function modifyTargetsFile(itemPath, target) {
 
   const replaceTargets = [...targets.map((v) => v.pattern)];
 
-  console.log(`Starting replace of targets: \n${replaceTargets.join('\n, ')} \nfrom root: ${rootDir}`);
+  console.log(`Starting replace of targets: ${replaceTargets.join(', ')} from root: ${rootDir}\n`);
 
   try {
     await replaceTargetsRecursively(rootDir, targets, excludes);
-    console.log('Replace process completed.');
+    console.log('\nReplace process completed.');
   } catch {
     // console.error(`Unexpected error during replace: ${error.message}`);
   }
