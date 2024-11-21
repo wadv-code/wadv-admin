@@ -118,20 +118,21 @@ async function copyAndBackup(itemPath: string, root: string = rootDir) {
   const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
   const joinPath = normalize(join(process.cwd(), `/${backupDir}/${dateString}/`));
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
-  console.log(writePath);
   // 确保目录存在
   await ensureDirectoryExistence(writePath);
   // 备份文件;
   copyFileSync(itemPath, writePath);
 }
 
-async function startReplace({ targets, excludes, root }: StartReplaceOptions) {
+async function startReplace({ targets, excludes, root = rootDir }: StartReplaceOptions) {
   const replaceTargets = [...targets.map((v) => v.pattern)];
   console.log(`\x1B[36m\nTargets: ${replaceTargets.join(', ')}\x1B[0m`);
-  console.log(`\x1B[36mRoot: ${root || rootDir}\x1B[0m`);
+  console.log(`\x1B[36mRoot: ${root}\x1B[0m`);
 
   try {
-    await replaceTargetsRecursively(root || rootDir, targets, excludes, root);
+    await replaceTargetsRecursively(root, targets, excludes, root);
+    // 输出当前目录计数
+    console.log(`'\x1B[32m${root} for ${count} times\n\x1B[0m`);
     // 计入总数
     allCount += count;
     // 清除当前目录计数
@@ -169,7 +170,6 @@ async function start(option: StartReplaceOptions) {
     console.warn(`\x1B[46mMultiple directory\x1B[0m`);
     for (const item of roots) {
       await startReplace({ ...option, targets: [item], root: item.root });
-      console.log(`'\x1B[32m${item.root} for ${allCount} times\n\x1B[0m`);
     }
     if (notRoots.length) await startReplace({ ...option, targets: notRoots });
   } else {
