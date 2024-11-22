@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import Button from './ui/button/Button.vue';
+import { Calendar } from '@/components/ui/calendar';
+// import { type DateValue, getLocalTimeZone, today } from '@internationalized/date'
+import { ref } from 'vue';
+
+const value = ref();
 </script>
 
 <template>
-  <main>
-    <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    <Button>伤心啊是的</Button>
-  </main>
+  <Calendar v-model="value" :weekday-format="'short'" class="rounded-md border" />
 </template>

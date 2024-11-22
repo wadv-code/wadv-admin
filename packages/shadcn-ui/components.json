@@ -10,7 +10,7 @@
   },
   "framework": "vite",
   "aliases": {
-    "components": "@wadv/shadcn-ui/components",
-    "utils": "@wadv/utils"
+    "components": "@/components",
+    "utils": "@wadv/utils/lib"
   }
 }
