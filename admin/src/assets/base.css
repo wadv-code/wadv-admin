@@ -1,9 +1,32 @@
 :root {
+  --font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
   }
+}
+
+::view-transition-new(root),
+::view-transition-old(root) {
+  @apply animate-none mix-blend-normal;
+}
+
+::view-transition-old(root) {
+  @apply z-[1];
+}
+
+::view-transition-new(root) {
+  @apply z-[2147483646];
+}
+
+html.dark::view-transition-old(root) {
+  @apply z-[2147483646];
+}
+
+html.dark::view-transition-new(root) {
+  @apply z-[1];
 }
 
 *,
@@ -15,4 +38,5 @@
 }
 
 body {
+  font-family: var(--font-family);
 }

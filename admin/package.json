@@ -1,6 +1,6 @@
 {
   "name": "@wadv/admin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "catalog:",
     "@wadv/shadcn-ui": "workspace:*",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
@@ -37,6 +38,7 @@
     "prettier": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
+    "vite-plugin-html": "catalog:",
     "vite-plugin-pwa": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",
     "vue-tsc": "catalog:"

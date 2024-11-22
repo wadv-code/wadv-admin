@@ -1,6 +1,6 @@
 {
   "name": "@wadv/web",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@wadv/shadcn-ui": "workspace:*",
+    "@vueuse/core": "catalog:",
     "pinia": "catalog:",
     "radix-vue": "catalog:",
     "vue": "catalog:",
