@@ -1,13 +1,14 @@
+import { dirname, join, normalize } from 'node:path';
+import { minimatch } from 'minimatch';
 import {
   copyFile,
   existsSync,
-  promises as fs,
+  lstatSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   writeFileSync,
 } from 'node:fs';
-import { dirname, join, normalize } from 'node:path';
-import { minimatch } from 'minimatch';
 
 // 根目录
 const rootDir = process.cwd();
@@ -16,7 +17,7 @@ const backupDir = 'backup_file';
 // 当前目录计数
 let count = 0;
 // 总计数
-let allCount = 0;
+let total = 0;
 
 /**
  * 递归查找并删除目标目录
@@ -28,7 +29,7 @@ async function replaceTargetsRecursively(
   excludes: string[],
   root?: string,
 ) {
-  const items = await fs.readdir(currentDir);
+  const items = readdirSync(currentDir);
 
   for (const item of items) {
     try {
@@ -39,7 +40,7 @@ async function replaceTargetsRecursively(
         // 修改文件
         if (target) await modifyTargetsFile(itemPath, target, root);
         // 目录
-        const stat = await fs.lstat(itemPath);
+        const stat = lstatSync(itemPath);
         if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes, root);
       }
     } catch {
@@ -76,10 +77,10 @@ async function modifyTargetsFile(itemPath: string, target: ReplaceTarget, root: 
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
   // 组合正则
-  const reg = new RegExp(target.target, 'g');
+  const reg = new RegExp(target.target, target.flags ?? 'g');
   if (reg.test(data)) {
     // 备份
-    await copyAndBackup(itemPath, root);
+    await copyAndBackup(itemPath, target, root);
     // 修改文件内容
     const modifiedData = data.replace(reg, target.replace);
     // 异步写入新内容到文件
@@ -108,14 +109,17 @@ async function ensureDirectoryExistence(itemPath: string) {
 /**
  * 备份
  * @param itemPath - 当前遍历的目录路径
+ * @param {object} target - 替换目标
  * @param root - 根目录
  */
-async function copyAndBackup(itemPath: string, root: string = rootDir) {
+async function copyAndBackup(itemPath: string, target: ReplaceTarget, root: string = rootDir) {
   const date = new Date();
   const dateString = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日${date.getHours()}时${date.getMinutes()}分`;
   // 组合正则
   const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
-  const joinPath = normalize(join(process.cwd(), `/${backupDir}/${dateString}/`));
+  let replacePath = `/${backupDir}/${dateString}/`
+  if (target.name) replacePath += `${target.name}/`
+  const joinPath = normalize(join(process.cwd(), replacePath));
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
   // 确保目录存在
   await ensureDirectoryExistence(writePath);
@@ -138,7 +142,7 @@ async function startReplace({ targets, excludes, root = rootDir }: StartReplaceO
     // 输出当前目录计数
     console.log(`'\x1B[32m${root} for ${count} times\n\x1B[0m`);
     // 计入总数
-    allCount += count;
+    total += count;
     // 清除当前目录计数
     count = 0;
   } catch {
@@ -148,12 +152,13 @@ async function startReplace({ targets, excludes, root = rootDir }: StartReplaceO
 
 /**
  * 全局替换
- * @param {ReplaceTargets} root 指定根目录
+ * @param {string} root 指定根目录
  * @param {string[]} excludes 排除文件
  * @param {ReplaceTargets} targets 替换集合
  *
  * @description targets => [
  *  {
+ *    name: '项目名称（备份用）',
  *    pattern: '匹配模式支持“*”通配符',
  *    target: '目标内容',
  *    replace: '替换内容',
@@ -181,7 +186,7 @@ async function start(option: StartReplaceOptions) {
     await startReplace(option);
   }
 
-  console.log(`'\x1B[32m\nThe replace process completed a total of ${allCount} files\n\x1B[0m`);
+  console.log(`'\x1B[32m\nThe replace process completed a total of ${total} files\n\x1B[0m`);
 }
 
 export { start };
