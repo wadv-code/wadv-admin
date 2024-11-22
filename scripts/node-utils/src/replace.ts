@@ -117,8 +117,8 @@ async function copyAndBackup(itemPath: string, target: ReplaceTarget, root: stri
   const dateString = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日${date.getHours()}时${date.getMinutes()}分`;
   // 组合正则
   const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
-  let replacePath = `/${backupDir}/${dateString}/`
-  if (target.name) replacePath += `${target.name}/`
+  let replacePath = `/${backupDir}/${dateString}/`;
+  if (target.name) replacePath += `${target.name}/`;
   const joinPath = normalize(join(process.cwd(), replacePath));
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
   // 确保目录存在

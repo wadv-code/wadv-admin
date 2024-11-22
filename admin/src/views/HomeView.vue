@@ -43,16 +43,20 @@ function toggleTheme(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="flex justify-center relative">
+  <div class="flex justify-center relative min-h-screen">
     <div class="pt-2 text-center">
       <Button @click="toggleTheme">切换{{ isDark ? '浅色' : '深色' }}</Button>
       <Calendar v-model="value" weekday-format="short" class="rounded-md border mt-2" />
       <DropdownMenu />
-      <div class="flex items-center space-x-2">
+      <Button @click="toggleTheme" class="">动画跟随按钮</Button>
+      <div class="flex items-center space-x-2 mt-5">
         <Switch id="airplane-mode" />
         <Label for="airplane-mode">Airplane Mode</Label>
       </div>
     </div>
+    <Button @click="toggleTheme" class="absolute left-2 top-2">动画跟随按钮</Button>
     <Button @click="toggleTheme" class="absolute right-2 top-2">动画跟随按钮</Button>
+    <Button @click="toggleTheme" class="absolute left-2 bottom-2">动画跟随按钮</Button>
+    <Button @click="toggleTheme" class="absolute right-2 bottom-2">动画跟随按钮</Button>
   </div>
 </template>
