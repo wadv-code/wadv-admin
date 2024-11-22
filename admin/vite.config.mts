@@ -5,6 +5,20 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { VitePWA } from 'vite-plugin-pwa'
+import type { Options as PwaPluginOptions } from 'vite-plugin-pwa'
+
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+const getDefaultPwaOptions = (name: string): Partial<PwaPluginOptions> => ({
+  manifest: {
+    description: 'WAdv Admin is a modern admin dashboard template based on Vue 3. ',
+    name: `${name}${isDevelopment ? ' dev' : ''}`,
+    short_name: `${name}${isDevelopment ? ' dev' : ''}`,
+    display: 'standalone',
+    start_url: '/',
+    theme_color: '#ffffff',
+  },
+})
 
 // https://vite.dev/config/
 export default defineConfig(async ({ mode }) => {
@@ -14,13 +28,14 @@ export default defineConfig(async ({ mode }) => {
   const devtools = env.VITE_DEVTOOLS === 'true'
   const base = env.VITE_BASE || '/'
   const title = env.VITE_APP_TITLE || 'WAdv Admin'
+  const name = env.VITE_APP_NAMESPACE || 'wadv-admin'
 
   // 插件
   const plugins: PluginOption[] = [
     vue(),
     vueJsx(),
     createHtmlPlugin({ inject: { data: { title } } }),
-    VitePWA(),
+    VitePWA(getDefaultPwaOptions(name)),
   ]
 
   // 开启devtools
