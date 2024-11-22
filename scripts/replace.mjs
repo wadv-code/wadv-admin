@@ -35,15 +35,7 @@ import { start } from '@wadv/node-utils';
       target: 'This is a about page',
       replace: '这是一个关于我们的页面',
       // root: 'C:/Users/laptop/Desktop/utils', 指定目录
-    },
-    // 替换成时间
-    {
-      name: 'target2',
-      pattern: 'example.txt',
-      target: '__today__',
-      replace: new Date().toLocaleDateString(),
-      // root: 'C:/Users/laptop/Desktop/utils', 指定目录
-    },
+    }
   ];
   await start({
     // 目标集合
