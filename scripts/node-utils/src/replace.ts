@@ -36,9 +36,9 @@ async function replaceTargetsRecursively(
       const itemPath = join(currentDir, item);
       if (!matchPattern(itemPath, excludes)) {
         // 锁定
-        const target = findPattern(itemPath, targets);
+        const replaceTargets = filterPattern(itemPath, targets);
         // 修改文件
-        if (target) await modifyTargetsFile(itemPath, target, root);
+        if (replaceTargets.length) await modifyTargetsFile(itemPath, replaceTargets, root);
         // 目录
         const stat = lstatSync(itemPath);
         if (stat.isDirectory()) await replaceTargetsRecursively(itemPath, targets, excludes, root);
@@ -63,33 +63,131 @@ function matchPattern(itemPath: string, excludes: string[]) {
  * @param {string} itemPath - 当前遍历的目录路径
  * @param {string[]} targets - 匹配目标
  */
-function findPattern(itemPath: string, targets: ReplaceTargets) {
-  return targets.find((target) => minimatch(itemPath, target.pattern, { matchBase: true }));
+function filterPattern(itemPath: string, targets: ReplaceTargets) {
+  return targets.filter((target) => minimatch(itemPath, target.pattern, { matchBase: true }));
+}
+
+/**
+ * 检查文件内容是否匹配
+ * @param data 文件数据
+ * @param target 目标集合
+ * @returns {boolean}
+ */
+function isPatternExist(data: string, targets: ReplaceTargets) {
+  return targets.map(target => {
+    const multiple = target.multiple
+    const pattern = target.target
+    let exp: string | undefined = '87E4C20A-4615-0142-11CD-54281EC52129'
+    if (multiple) {
+      exp = Object.keys(multiple).join('|')
+    } else {
+      exp = Array.isArray(pattern) ? pattern.join('|') : pattern;
+    }
+    if (!exp) return false;
+    const reg = new RegExp(exp, target.flags ?? 'g');
+    return reg.test(data);
+  }).some(s => s)
+}
+
+/**
+ * 
+ * @param data 文件数据
+ * @param targets 目标集合
+ * @returns {string}
+ */
+async function execModify(data: string, targets: ReplaceTargets) {
+  let result = data;
+  for (const target of targets) {
+    const multiple = target.multiple
+    if (multiple) {
+      // 多换多
+      result = await multipleModify(result, target, multiple)
+    } else {
+      // 一换一或多换一
+      result = await patternModify(result, target)
+    }
+  }
+  return result
+}
+
+/**
+ * 多换多
+ * @param data 被
+ * @param target 
+ * @param multiple 
+ * @returns 
+ */
+async function multipleModify(data: string, target: ReplaceTarget, multiple: TypedString) {
+  const keys = Object.keys(multiple)
+  let result = data;
+  for (const key of keys) {
+    const reg = new RegExp(key, target.flags ?? 'g');
+    result = result.replace(reg, multiple[key]);
+  }
+  return result
+}
+
+
+/**
+ * 一换一或多换一
+ * @param data 被
+ * @param target 
+ * @param multiple 
+ * @returns 
+ */
+async function patternModify(data: string, target: ReplaceTarget) {
+  const pattern = target.target
+  const replace = target.replace
+  if (!pattern || !replace) return data;
+  let result = data;
+  if (Array.isArray(pattern)) {
+    for (const pat of pattern) {
+      const reg = new RegExp(pat, target.flags ?? 'g');
+      result = result.replace(reg, replace);
+    }
+  } else {
+    const reg = new RegExp(pattern, target.flags ?? 'g');
+    result = data.replace(reg, replace);
+  }
+  return result
 }
 
 /**
  * 修改文件内容
  * @param {string} itemPath - 当前遍历的目录路径
- * @param {object} target - 替换目标
+ * @param {object} targets - 替换目标集合
  * @param {string} root - 根目录
  */
-async function modifyTargetsFile(itemPath: string, target: ReplaceTarget, root: string = rootDir) {
+async function modifyTargetsFile(itemPath: string, targets: ReplaceTargets, root: string = rootDir) {
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
-  // 组合正则
-  const reg = new RegExp(target.target, target.flags ?? 'g');
-  if (reg.test(data)) {
+  if (isPatternExist(data, targets)) {
     // 备份
-    await copyAndBackup(itemPath, target, root);
+    await copyAndBackup(itemPath, root, targets);
     // 修改文件内容
-    const modifiedData = data.replace(reg, target.replace);
+    const modifiedData = await execModify(data, targets)
     // 异步写入新内容到文件
-    writeFileSync(itemPath, modifiedData, 'utf8');
-    // 替换完成
-    console.log(`* Replace: ${itemPath}`);
-    // 自增
-    count++;
+    if (modifiedData) {
+      writeFileSync(itemPath, modifiedData, 'utf8');
+      // 替换完成
+      console.log(`* Replace: ${itemPath}`);
+      // 自增
+      count++;
+    }
   }
+  // const reg = new RegExp(target.target, target.flags ?? 'g');
+  // if (reg.test(data)) {
+  //   // 备份
+  //   await copyAndBackup(itemPath, target, root);
+  //   // 修改文件内容
+  //   const modifiedData = data.replace(reg, target.replace);
+  //   // 异步写入新内容到文件
+  //   writeFileSync(itemPath, modifiedData, 'utf8');
+  //   // 替换完成
+  //   console.log(`* Replace: ${itemPath}`);
+  //   // 自增
+  //   count++;
+  // }
 }
 
 /**
@@ -109,16 +207,17 @@ async function ensureDirectoryExistence(itemPath: string) {
 /**
  * 备份
  * @param itemPath - 当前遍历的目录路径
- * @param {object} target - 替换目标
  * @param root - 根目录
+ * @param {ReplaceTargets} targets - 替换目标集合
  */
-async function copyAndBackup(itemPath: string, target: ReplaceTarget, root: string = rootDir) {
+async function copyAndBackup(itemPath: string, root: string = rootDir, targets: ReplaceTargets) {
+  const target = targets.find(f => f.name)
   const date = new Date();
   const dateString = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日${date.getHours()}时${date.getMinutes()}分`;
   // 组合正则
   const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
-  let replacePath = `/${backupDir}/${dateString}/`;
-  if (target.name) replacePath += `${target.name}/`;
+  let replacePath = `/${backupDir}/${dateString}/`
+  if (target) replacePath += `${target.name}/`
   const joinPath = normalize(join(process.cwd(), replacePath));
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
   // 确保目录存在
@@ -133,6 +232,7 @@ async function copyAndBackup(itemPath: string, target: ReplaceTarget, root: stri
 }
 
 async function startReplace({ targets, excludes, root = rootDir }: StartReplaceOptions) {
+
   const replaceTargets = [...targets.map((v) => v.pattern)];
   console.log(`\x1B[36m\nTargets: ${replaceTargets.join(', ')}\x1B[0m`);
   console.log(`\x1B[36mRoot: ${root}\x1B[0m`);
@@ -169,6 +269,14 @@ async function startReplace({ targets, excludes, root = rootDir }: StartReplaceO
  */
 async function start(option: StartReplaceOptions) {
   const { targets, excludes = [] } = option;
+
+  const valid = targets.every(s => (s.target && s.replace) || ((!s.target || !s.replace) && !!s.multiple))
+
+  if (!valid) {
+    console.log(`\x1B[41mError: The matching rule is a required field.\x1B[0m`);
+    return;
+  }
+
   const roots = targets.filter((f) => f.root);
   const notRoots = targets.filter((f) => !f.root);
 
