@@ -1,4 +1,4 @@
-import { start } from "../dist/index.mjs";
+import { start } from '@wadv/node-utils';
 
 /**
  * 全局替换
@@ -20,12 +20,12 @@ import { start } from "../dist/index.mjs";
 (async function () {
   // 排除目录或文件夹
   const excludes = [
-    "node_modules",
-    "dist",
-    ".turbo",
-    "dist.zip",
+    'node_modules',
+    'dist',
+    '.turbo',
+    'dist.zip',
     // 排除自身
-    "replace.mjs",
+    'replace.mjs',
   ];
   // 要修改的文件
   const targets = [
@@ -57,10 +57,10 @@ import { start } from "../dist/index.mjs";
 
     // ******************* 多换一使用方式 target为数组时  "A，B" => "C" *******************
     {
-      name: "target1",
-      pattern: "*.{vue,js,ts,jsx,tsx,svelte,astro,html}",
-      target: ["This is a about page", "\\.about"],
-      replace: "test_test_test_test_test_test",
+      name: 'target1',
+      pattern: '*.{vue,js,ts,jsx,tsx,svelte,astro,html}',
+      target: ['This is a about page', '\\.about'],
+      replace: 'test_test_test_test_test_test',
       // 指定目录
       // root: "D:\\projects\\Outside\\wadv-admin",
     },
