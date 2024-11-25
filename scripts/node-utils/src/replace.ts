@@ -9,6 +9,7 @@ import {
   readFileSync,
   writeFileSync,
 } from 'node:fs';
+import type { ReplaceTarget, ReplaceTargets, StartReplaceOptions, TypedString } from './type';
 
 // 根目录
 const rootDir = process.cwd();
@@ -74,23 +75,25 @@ function filterPattern(itemPath: string, targets: ReplaceTargets) {
  * @returns {boolean}
  */
 function isPatternExist(data: string, targets: ReplaceTargets) {
-  return targets.map(target => {
-    const multiple = target.multiple
-    const pattern = target.target
-    let exp: string | undefined = '87E4C20A-4615-0142-11CD-54281EC52129'
-    if (multiple) {
-      exp = Object.keys(multiple).join('|')
-    } else {
-      exp = Array.isArray(pattern) ? pattern.join('|') : pattern;
-    }
-    if (!exp) return false;
-    const reg = new RegExp(exp, target.flags ?? 'g');
-    return reg.test(data);
-  }).some(s => s)
+  return targets
+    .map((target) => {
+      const multiple = target.multiple;
+      const pattern = target.target;
+      let exp: string | undefined = '87E4C20A-4615-0142-11CD-54281EC52129';
+      if (multiple) {
+        exp = Object.keys(multiple).join('|');
+      } else {
+        exp = Array.isArray(pattern) ? pattern.join('|') : pattern;
+      }
+      if (!exp) return false;
+      const reg = new RegExp(exp, target.flags ?? 'g');
+      return reg.test(data);
+    })
+    .some((s) => s);
 }
 
 /**
- * 
+ *
  * @param data 文件数据
  * @param targets 目标集合
  * @returns {string}
@@ -98,46 +101,45 @@ function isPatternExist(data: string, targets: ReplaceTargets) {
 async function execModify(data: string, targets: ReplaceTargets) {
   let result = data;
   for (const target of targets) {
-    const multiple = target.multiple
+    const multiple = target.multiple;
     if (multiple) {
       // 多换多
-      result = await multipleModify(result, target, multiple)
+      result = await multipleModify(result, target, multiple);
     } else {
       // 一换一或多换一
-      result = await patternModify(result, target)
+      result = await patternModify(result, target);
     }
   }
-  return result
+  return result;
 }
 
 /**
  * 多换多
  * @param data 被
- * @param target 
- * @param multiple 
- * @returns 
+ * @param target
+ * @param multiple
+ * @returns
  */
 async function multipleModify(data: string, target: ReplaceTarget, multiple: TypedString) {
-  const keys = Object.keys(multiple)
+  const keys = Object.keys(multiple);
   let result = data;
   for (const key of keys) {
     const reg = new RegExp(key, target.flags ?? 'g');
     result = result.replace(reg, multiple[key]);
   }
-  return result
+  return result;
 }
-
 
 /**
  * 一换一或多换一
  * @param data 被
- * @param target 
- * @param multiple 
- * @returns 
+ * @param target
+ * @param multiple
+ * @returns
  */
 async function patternModify(data: string, target: ReplaceTarget) {
-  const pattern = target.target
-  const replace = target.replace
+  const pattern = target.target;
+  const replace = target.replace;
   if (!pattern || !replace) return data;
   let result = data;
   if (Array.isArray(pattern)) {
@@ -149,7 +151,7 @@ async function patternModify(data: string, target: ReplaceTarget) {
     const reg = new RegExp(pattern, target.flags ?? 'g');
     result = data.replace(reg, replace);
   }
-  return result
+  return result;
 }
 
 /**
@@ -158,14 +160,18 @@ async function patternModify(data: string, target: ReplaceTarget) {
  * @param {object} targets - 替换目标集合
  * @param {string} root - 根目录
  */
-async function modifyTargetsFile(itemPath: string, targets: ReplaceTargets, root: string = rootDir) {
+async function modifyTargetsFile(
+  itemPath: string,
+  targets: ReplaceTargets,
+  root: string = rootDir,
+) {
   // 异步读取文件
   const data = readFileSync(itemPath, 'utf8');
   if (isPatternExist(data, targets)) {
     // 备份
     await copyAndBackup(itemPath, root, targets);
     // 修改文件内容
-    const modifiedData = await execModify(data, targets)
+    const modifiedData = await execModify(data, targets);
     // 异步写入新内容到文件
     if (modifiedData) {
       writeFileSync(itemPath, modifiedData, 'utf8');
@@ -211,13 +217,13 @@ async function ensureDirectoryExistence(itemPath: string) {
  * @param {ReplaceTargets} targets - 替换目标集合
  */
 async function copyAndBackup(itemPath: string, root: string = rootDir, targets: ReplaceTargets) {
-  const target = targets.find(f => f.name)
+  const target = targets.find((f) => f.name);
   const date = new Date();
   const dateString = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日${date.getHours()}时${date.getMinutes()}分`;
   // 组合正则
   const rootReg = new RegExp(root.replace(/\\/g, '/'), 'g');
-  let replacePath = `/${backupDir}/${dateString}/`
-  if (target) replacePath += `${target.name}/`
+  let replacePath = `/${backupDir}/${dateString}/`;
+  if (target) replacePath += `${target.name}/`;
   const joinPath = normalize(join(process.cwd(), replacePath));
   const writePath = normalize(itemPath.replace(/\\/g, '/').replace(rootReg, joinPath));
   // 确保目录存在
@@ -232,7 +238,6 @@ async function copyAndBackup(itemPath: string, root: string = rootDir, targets: 
 }
 
 async function startReplace({ targets, excludes, root = rootDir }: StartReplaceOptions) {
-
   const replaceTargets = [...targets.map((v) => v.pattern)];
   console.log(`\x1B[36m\nTargets: ${replaceTargets.join(', ')}\x1B[0m`);
   console.log(`\x1B[36mRoot: ${root}\x1B[0m`);
@@ -270,7 +275,9 @@ async function startReplace({ targets, excludes, root = rootDir }: StartReplaceO
 async function start(option: StartReplaceOptions) {
   const { targets, excludes = [] } = option;
 
-  const valid = targets.every(s => (s.target && s.replace) || ((!s.target || !s.replace) && !!s.multiple))
+  const valid = targets.every(
+    (s) => (s.target && s.replace) || ((!s.target || !s.replace) && !!s.multiple),
+  );
 
   if (!valid) {
     console.log(`\x1B[41mError: The matching rule is a required field.\x1B[0m`);

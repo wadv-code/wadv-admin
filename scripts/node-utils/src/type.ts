@@ -1,9 +1,8 @@
-
-declare interface TypedString {
-  [key: string]: string
+interface TypedString {
+  [key: string]: string;
 }
 
-declare interface ReplaceTarget {
+interface ReplaceTarget {
   // 匹配规则
   pattern: string;
   // 目标
@@ -20,10 +19,12 @@ declare interface ReplaceTarget {
   flags?: string;
 }
 
-declare type ReplaceTargets = ReplaceTarget[];
+type ReplaceTargets = ReplaceTarget[];
 
 declare interface StartReplaceOptions {
   targets: ReplaceTargets;
   excludes: string[];
   root?: string;
 }
+
+export type { TypedString, ReplaceTarget, ReplaceTargets, StartReplaceOptions };
