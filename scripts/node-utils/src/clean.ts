@@ -21,14 +21,14 @@ async function cleanTargetsRecursively(currentDir: string, targets: string[], ex
         if (matchPattern(itemPath, targets)) {
           // 匹配到目标目录或文件时直接删除
           await fs.rm(itemPath, { force: true, recursive: true });
-          console.log(`\x1B[31m- Deleted: ${itemPath}\x1B[0m`);
+          console.log(`\x1B[32m- Deleted: ${itemPath}\x1B[0m`);
         }
         const stat = await fs.lstat(itemPath);
         if (stat.isDirectory()) {
           await cleanTargetsRecursively(itemPath, targets, excludes);
         }
       } else {
-        console.log(`\x1B[32m* Skip: ${itemPath}\x1B[0m`);
+        console.log(`\x1B[33m* Skip: ${itemPath}\x1B[0m`);
       }
     } catch (error) {
       // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
