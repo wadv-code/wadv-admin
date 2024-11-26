@@ -1,34 +1,23 @@
-import { startClean } from "../dist/index.mjs";
+import { startClean } from '@wadv/node-utils';
 
 /**
  * 全局替换
  * @param {string} root 指定根目录
  * @param {string[]} excludes 排除文件
  * @param {string[]} targets 替换集合
- * @description targets => [
- *  {
- *    name: '项目名称（备份用）',
- *    pattern: '匹配模式支持“*”通配符',
- *    target: '目标内容',
- *    replace: '替换内容',
- *    multiple: {'A': 'B'},多个目标集合，multiple字段存在时，target和replace将不在生效
- *    root: '选填：匹配指定目录，不填默认"root"或"utils"为相对目录',
- *    flags: '正则标志不填默认"g"'
- *  }
- * ]
  */
 (async function () {
   // 排除文件
-  const excludes = ["**/Outside/node-utils"];
+  const excludes = ['**/Outside/node-utils'];
   // 要删除的目录及文件名称
   const targets = [
-    "node_modules",
-    "backup_file",
-    "dist",
-    ".turbo",
-    "dist.zip",
-    "dist.7z",
-    "dist.tar",
+    'node_modules',
+    'backup_file',
+    'dist',
+    '.turbo',
+    'dist.zip',
+    'dist.7z',
+    'dist.tar',
   ];
   await startClean({
     // 目标集合
