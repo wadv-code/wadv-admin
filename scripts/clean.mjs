@@ -1,49 +1,41 @@
-import { promises as fs } from 'node:fs';
-import { join } from 'node:path';
-
-const rootDir = process.cwd();
+import { startClean } from "../dist/index.mjs";
 
 /**
- * 递归查找并删除目标目录
- * @param {string} currentDir - 当前遍历的目录路径
+ * 全局替换
+ * @param {string} root 指定根目录
+ * @param {string[]} excludes 排除文件
+ * @param {string[]} targets 替换集合
+ * @description targets => [
+ *  {
+ *    name: '项目名称（备份用）',
+ *    pattern: '匹配模式支持“*”通配符',
+ *    target: '目标内容',
+ *    replace: '替换内容',
+ *    multiple: {'A': 'B'},多个目标集合，multiple字段存在时，target和replace将不在生效
+ *    root: '选填：匹配指定目录，不填默认"root"或"utils"为相对目录',
+ *    flags: '正则标志不填默认"g"'
+ *  }
+ * ]
  */
-async function cleanTargetsRecursively(currentDir, targets) {
-  const items = await fs.readdir(currentDir);
-
-  for (const item of items) {
-    try {
-      const itemPath = join(currentDir, item);
-      if (targets.includes(item)) {
-        // 匹配到目标目录或文件时直接删除
-        await fs.rm(itemPath, { force: true, recursive: true });
-        console.log(`Deleted: ${itemPath}`);
-      }
-      const stat = await fs.lstat(itemPath);
-      if (stat.isDirectory()) {
-        await cleanTargetsRecursively(itemPath, targets);
-      }
-    } catch(error) {
-      // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
-    }
-  }
-}
-
-(async function startCleanup() {
+(async function () {
+  // 排除文件
+  const excludes = ["**/Outside/node-utils"];
   // 要删除的目录及文件名称
-  const targets = ['node_modules', 'dist', '.turbo', 'dist.zip'];
-
-  const deleteLockFile = process.argv.includes('--del-lock');
-  const cleanupTargets = [...targets];
-  if (deleteLockFile) {
-    cleanupTargets.push('pnpm-lock.yaml');
-  }
-
-  console.log(`Starting cleanup of targets: ${cleanupTargets.join(', ')} from root: ${rootDir}`);
-
-  try {
-    await cleanTargetsRecursively(rootDir, cleanupTargets);
-    console.log('Cleanup process completed.');
-  } catch (error) {
-    // console.error(`Unexpected error during cleanup: ${error.message}`);
-  }
+  const targets = [
+    "node_modules",
+    "backup_file",
+    "dist",
+    ".turbo",
+    "dist.zip",
+    "dist.7z",
+    "dist.tar",
+  ];
+  await startClean({
+    // 目标集合
+    targets,
+    // 排除文件
+    excludes,
+    // 指定目录不填默认"utils"所在为根目录
+    // root: "D:\\projects\\Outside\\wadv-admin",
+  });
 })();

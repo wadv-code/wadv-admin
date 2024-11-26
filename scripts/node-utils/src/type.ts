@@ -1,15 +1,16 @@
-interface TypedString {
-  [key: string]: string;
+
+export interface TypedString {
+  [key: string]: string
 }
 
-interface ReplaceTarget {
+export interface ReplaceTarget {
   // 匹配规则
   pattern: string;
   // 目标
   target?: string | string[];
   // 替换
   replace?: string;
-  // 多个替换 => {'A': 'B'}，多个目标集合，multiple字段存在时，target和replace将不生效
+  // 多个替换 => {'A': 'B'}，多个目标集合，multiple字段存在时，target和replace将不在生效
   multiple?: TypedString;
   // 项目名称，用于备份
   name?: string;
@@ -19,12 +20,20 @@ interface ReplaceTarget {
   flags?: string;
 }
 
-type ReplaceTargets = ReplaceTarget[];
+export type ReplaceTargets = ReplaceTarget[];
 
-declare interface StartReplaceOptions {
+// 替换参数
+export interface StartReplaceOptions {
   targets: ReplaceTargets;
   excludes: string[];
   root?: string;
 }
 
-export type { TypedString, ReplaceTarget, ReplaceTargets, StartReplaceOptions };
+// 删除参数
+export interface StartCleanOptions {
+  targets: string[];
+  excludes: string[];
+  root?: string;
+}
+
+

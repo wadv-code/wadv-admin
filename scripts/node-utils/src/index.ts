@@ -1,5 +1,6 @@
 export * from './monorepo';
 export * from './replace';
+export * from './clean';
 
 // others *
 export type { Package } from '@manypkg/get-packages';
