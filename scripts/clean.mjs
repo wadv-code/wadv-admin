@@ -8,16 +8,20 @@ import { startClean } from '@wadv/node-utils';
  */
 (async function () {
   // 排除文件
-  const excludes = ['**/Outside/node-utils'];
+  const excludes = [
+    '**/scripts/node-utils',
+    '**/projects/Electron/electron-am-win',
+    '**/projects/Electron/electron-deployer-win',
+  ];
   // 要删除的目录及文件名称
   const targets = [
-    'node_modules',
-    'backup_file',
     'dist',
     '.turbo',
-    'dist.zip',
     'dist.7z',
     'dist.tar',
+    'dist.zip',
+    'backup_file',
+    'node_modules',
   ];
   await startClean({
     // 目标集合

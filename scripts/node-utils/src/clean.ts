@@ -28,7 +28,7 @@ async function cleanTargetsRecursively(currentDir: string, targets: string[], ex
           await cleanTargetsRecursively(itemPath, targets, excludes);
         }
       } else {
-        console.log(`\x1B[33m* Skip: ${itemPath}\x1B[0m`);
+        console.log(`\x1B[2m* Skip: ${itemPath}\x1B[0m`);
       }
     } catch (error) {
       // console.error(`Error handling item ${item} in ${currentDir}: ${error.message}`);
