@@ -25,13 +25,19 @@
     }
   },
   "dependencies": {
+    "@ctrl/tinycolor": "catalog:",
+    "@vue/shared": "catalog:",
+    "@wadv/interfaces": "workspace:*",
     "clsx": "catalog:",
+    "defu": "catalog:",
+    "lodash.clonedeep": "catalog:",
     "nprogress": "catalog:",
-    "vue-router": "catalog:",
     "tailwind-merge": "catalog:",
-    "lodash.clonedeep": "catalog:"
+    "theme-colors": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "catalog:"
+    "@types/lodash.clonedeep": "catalog:",
+    "@types/nprogress": "catalog:"
   }
 }

@@ -5,6 +5,8 @@ import { resetStaticRoutes } from '@wadv/utils'
 import { createRouterGuard } from './guard'
 import { routes } from './routes'
 
+console.log(routes)
+
 const viteBase = import.meta.env.VITE_BASE
 const hashHistory = import.meta.env.VITE_ROUTER_HISTORY
 

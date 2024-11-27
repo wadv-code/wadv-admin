@@ -59,11 +59,10 @@
     "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
+    "@wadv/node-utils": "workspace:*",
     "@wadv/tailwind-config": "workspace:*",
     "@wadv/tsconfig": "workspace:*",
     "@wadv/turbo-run": "workspace:*",
-    "@wadv/interfaces": "workspace:*",
-    "@wadv/node-utils": "workspace:*",
     "autoprefixer": "catalog:",
     "happy-dom": "catalog:",
     "prettier": "catalog:",
@@ -80,7 +79,7 @@
     "node": ">=20",
     "pnpm": ">=9.12.0"
   },
-  "packageManager": "pnpm@9.14.1",
+  "packageManager": "pnpm@9.14.2",
   "pnpm": {
     "peerDependencyRules": {
       "allowedVersions": {

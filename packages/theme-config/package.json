@@ -1,0 +1,35 @@
+{
+  "name": "@wadv/theme-config",
+  "version": "1.0.0",
+  "author": {
+    "name": "wadv",
+    "email": "853925809@qq.com",
+    "url": "https://gitee.com/wangdachuia/wadv-admin"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "#build": "pnpm unbuild"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./src/index.ts",
+      "#default": "./dist/index.mjs"
+    }
+  },
+  "dependencies": {
+    "@vueuse/core": "catalog:",
+    "@wadv/interfaces": "workspace:*",
+    "@wadv/utils": "workspace:*",
+    "vue": "catalog:"
+  }
+}

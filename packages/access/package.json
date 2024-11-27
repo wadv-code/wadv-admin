@@ -1,0 +1,27 @@
+{
+  "name": "@wadv/access",
+  "version": "1.0.0",
+  "author": {
+    "name": "wadv",
+    "email": "853925809@qq.com",
+    "url": "https://gitee.com/wangdachuia/wadv-admin"
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@wadv/interfaces": "workspace:*",
+    "@wadv/stores": "workspace:*",
+    "@wadv/theme-config": "workspace:*",
+    "@wadv/utils": "workspace:*",
+    "vue": "catalog:"
+  }
+}

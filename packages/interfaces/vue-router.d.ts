@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import type { RouteMeta as IRouteMeta } from './src/vue-router';
+import type { RouteMeta as IRouteMeta } from '@wadv/interfaces';
 
 import 'vue-router';
 

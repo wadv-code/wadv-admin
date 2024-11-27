@@ -26,11 +26,11 @@
       "development": "./src/index.ts",
       "default": "./dist/index.mjs"
     },
-    "./vue-router": {
-      "types": "./vue-router.d.ts"
-    },
     "./global": {
       "types": "./global.d.ts"
+    },
+    "./vue-router": {
+      "types": "./vue-router.d.ts"
     }
   },
   "publishConfig": {

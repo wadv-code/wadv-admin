@@ -42,8 +42,8 @@
     }
   },
   "dependencies": {
-    "@wadv/utils": "workspace:*",
     "@radix-icons/vue": "catalog:",
+    "@wadv/utils": "workspace:*",
     "class-variance-authority": "catalog:",
     "lucide-vue-next": "catalog:",
     "radix-vue": "catalog:",

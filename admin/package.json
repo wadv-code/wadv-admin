@@ -13,10 +13,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@wadv/stores": "workspace:*",
-    "@wadv/shadcn-ui": "workspace:*",
-    "@wadv/utils": "workspace:*",
     "@vueuse/core": "catalog:",
+    "@wadv/access": "workspace:*",
+    "@wadv/utils": "workspace:*",
+    "@wadv/interfaces": "workspace:*",
+    "@wadv/shadcn-ui": "workspace:*",
+    "@wadv/stores": "workspace:*",
+    "@wadv/theme-config": "workspace:*",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "lucide-vue-next": "catalog:",
