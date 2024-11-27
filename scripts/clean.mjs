@@ -9,7 +9,9 @@ import { startClean } from '@wadv/node-utils';
 (async function () {
   // 排除文件
   const excludes = [
-    '**/scripts/node-utils',
+    // 排除自身
+    '**/scripts/node-utils/dist',
+    // 排除我的Electron开发包
     '**/projects/Electron/electron-am-win',
     '**/projects/Electron/electron-deployer-win',
   ];
