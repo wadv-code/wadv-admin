@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { buttonVariants } from '../button'
-import { cn } from '@wadv/utils/lib'
+import { cn } from '@wadv/utils'
 import { ChevronLeftIcon } from '@radix-icons/vue'
 import { CalendarPrev, type CalendarPrevProps, useForwardProps } from 'radix-vue'
 import { computed, type HTMLAttributes } from 'vue'

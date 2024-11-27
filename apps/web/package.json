@@ -30,7 +30,7 @@
     "@vue/eslint-config-typescript": "catalog:",
     "@vue/test-utils": "catalog:",
     "@vue/tsconfig": "catalog:",
-    "@wadv/types": "workspace:*",
+    "@wadv/interfaces": "workspace:*",
     "eslint": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "npm-run-all2": "catalog:",

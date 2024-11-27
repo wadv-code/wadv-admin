@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ButtonVariants, ButtonVariantSize } from './types';
 
-import { cn } from '@wadv/utils/lib';
+import { cn } from '@wadv/utils';
 
 import { Primitive, type PrimitiveProps } from 'radix-vue';
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cn } from '@wadv/utils/lib'
+import { cn } from '@wadv/utils'
 import { Label, type LabelProps } from 'radix-vue'
 import { computed, type HTMLAttributes } from 'vue'
 

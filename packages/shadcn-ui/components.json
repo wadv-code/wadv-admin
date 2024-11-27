@@ -11,6 +11,6 @@
   "framework": "vite",
   "aliases": {
     "components": "@/components",
-    "utils": "@wadv/utils/lib"
+    "utils": "@wadv/utils"
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cn } from '@wadv/utils/lib'
+import { cn } from '@wadv/utils'
 import {
   SwitchRoot,
   type SwitchRootEmits,

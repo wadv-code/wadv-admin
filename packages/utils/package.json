@@ -18,24 +18,18 @@
   ],
   "sideEffects": false,
   "exports": {
-    "./lib": {
-      "types": "./src/lib/index.ts",
-      "development": "./src/lib/index.ts",
-      "default": "./dist/lib/index.mjs"
-    }
-  },
-  "publishConfig": {
-    "exports": {
-      "./lib": {
-        "types": "./dist/lib/index.d.ts",
-        "default": "./dist/lib/index.mjs"
-      }
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
     }
   },
   "dependencies": {
     "clsx": "catalog:",
-    "lodash.clonedeep": "catalog:",
-    "tailwind-merge": "catalog:"
+    "nprogress": "catalog:",
+    "vue-router": "catalog:",
+    "tailwind-merge": "catalog:",
+    "lodash.clonedeep": "catalog:"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "catalog:"

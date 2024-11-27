@@ -63,8 +63,8 @@ export default defineConfig(async ({ mode }) => {
     define: {
       __VITE_PORT__: port,
       __VITE_DEVTOOLS__: devtools,
-      __NEXT_VERSION__: JSON.stringify(process.env.npm_package_version),
-      __NEXT_NAME__: JSON.stringify(process.env.npm_package_name),
+      __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+      __APP_NAME__: JSON.stringify(process.env.npm_package_name),
     },
   }
 })

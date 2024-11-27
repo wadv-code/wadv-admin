@@ -17,7 +17,7 @@
     "web.json"
   ],
   "dependencies": {
-    "@wadv/types": "workspace:*",
+    "@wadv/interfaces": "workspace:*",
     "vite": "catalog:"
   }
 }

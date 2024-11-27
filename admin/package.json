@@ -13,11 +13,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@vueuse/core": "catalog:",
+    "@wadv/stores": "workspace:*",
     "@wadv/shadcn-ui": "workspace:*",
+    "@wadv/utils": "workspace:*",
+    "@vueuse/core": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "lucide-vue-next": "catalog:",
+    "nprogress": "catalog:",
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"

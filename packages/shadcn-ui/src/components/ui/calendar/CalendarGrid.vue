@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { cn } from '@wadv/utils/lib'
+import { cn } from '@wadv/utils'
 import { CalendarGrid, type CalendarGridProps, useForwardProps } from 'radix-vue'
 import { computed, type HTMLAttributes } from 'vue'
 

@@ -62,7 +62,7 @@
     "@wadv/tailwind-config": "workspace:*",
     "@wadv/tsconfig": "workspace:*",
     "@wadv/turbo-run": "workspace:*",
-    "@wadv/types": "workspace:*",
+    "@wadv/interfaces": "workspace:*",
     "@wadv/node-utils": "workspace:*",
     "autoprefixer": "catalog:",
     "happy-dom": "catalog:",

@@ -1,0 +1,48 @@
+{
+  "name": "@wadv/interfaces",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wadv-code/wadv-admin",
+  "bugs": "https://github.com/wadv-code/wadv-admin/issues",
+  "repository": "wadv-code/wadv-admin.git",
+  "author": {
+    "name": "WAdv",
+    "email": "853925809@qq.com",
+    "url": "https://github.com/wadv-code"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm unbuild"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./vue-router": {
+      "types": "./vue-router.d.ts"
+    },
+    "./global": {
+      "types": "./global.d.ts"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "dependencies": {
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}
