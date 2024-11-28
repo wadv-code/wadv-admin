@@ -3,6 +3,6 @@
   "display": "Web Application",
   "extends": "./web.json",
   "compilerOptions": {
-    "types": ["vite/client", "@wadv/interfaces/global"]
+    "types": ["vite/client", "@wadv/interfaces/global", "@wadv/interfaces/vue-router"]
   }
 }

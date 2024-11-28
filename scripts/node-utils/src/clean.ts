@@ -74,7 +74,7 @@ async function startClean(option: StartCleanOptions) {
   try {
     await cleanTargetsRecursively(rootSrc, cleanupTargets, excludes);
     console.log();
-    console.log('\x1B[32mCleanup process completed.\x1B[0m');
+    console.log('\x1B[42mCleanup process completed.\x1B[0m');
     console.log();
   } catch (error) {
     // console.error(`Unexpected error during cleanup: ${error.message}`);

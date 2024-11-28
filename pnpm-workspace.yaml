@@ -33,6 +33,7 @@ catalog:
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1
   consola: ^3.2.3
+  dayjs: ^1.11.13
   defu: ^6.1.4
   dotenv: ^16.4.5
   eslint: ^9.15.0

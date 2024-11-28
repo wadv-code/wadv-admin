@@ -1,7 +1,6 @@
 {
   "name": "wadv-admin",
   "version": "1.0.0",
-  "private": true,
   "keywords": [
     "monorepo",
     "turbo",
@@ -55,25 +54,36 @@
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile"
   },
   "devDependencies": {
-    "@changesets/cli": "catalog:",
-    "@types/node": "catalog:",
-    "@vitejs/plugin-vue": "catalog:",
-    "@vitejs/plugin-vue-jsx": "catalog:",
     "@wadv/node-utils": "workspace:*",
     "@wadv/tailwind-config": "workspace:*",
     "@wadv/tsconfig": "workspace:*",
     "@wadv/turbo-run": "workspace:*",
+    "@types/node": "catalog:",
+    "@changesets/cli": "catalog:",
+    "@tsconfig/node22": "catalog:",
+    "@vue/tsconfig": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "@vue/eslint-config-prettier": "catalog:",
+    "@vue/eslint-config-typescript": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
     "autoprefixer": "catalog:",
     "happy-dom": "catalog:",
-    "prettier": "catalog:",
     "tailwindcss": "catalog:",
     "turbo": "catalog:",
+    "prettier": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:",
-    "vue-tsc": "catalog:"
+    "vue-tsc": "catalog:",
+    "npm-run-all2": "catalog:",
+    "vite-plugin-html": "catalog:",
+    "vite-plugin-pwa": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-vue": "catalog:"
   },
   "engines": {
     "node": ">=20",
@@ -85,6 +95,16 @@
       "allowedVersions": {
         "eslint": "*"
       }
-    }
+    },
+    "overrides": {
+      "@ctrl/tinycolor": "catalog:",
+      "clsx": "catalog:",
+      "pinia": "catalog:",
+      "vue": "catalog:"
+    },
+    "neverBuiltDependencies": [
+      "canvas",
+      "node-gyp"
+    ]
   }
 }

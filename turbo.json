@@ -6,8 +6,10 @@
     "**/tsconfig*.json",
     "scripts/*/src/**/*.ts",
     "scripts/*/src/**/*.json",
-    "packages/*/tsconfig.json"
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.json"
   ],
+  "globalEnv": ["NODE_ENV"],
   "ui": "tui",
   "tasks": {
     "build": {
@@ -21,9 +23,13 @@
     "check-types": {
       "dependsOn": ["^check-types"]
     },
+    "test:e2e": {},
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "typecheck": {
+      "outputs": []
     }
   }
 }

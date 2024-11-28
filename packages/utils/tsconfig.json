@@ -1,6 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@wadv/tsconfig/library.json",
-  "include": ["src", "bin"],
+  "compilerOptions": {
+    "types": ["@wadv/interfaces/vue-router"]
+  },
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
